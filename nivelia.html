@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NivelIA — Aprende a confiar con criterio</title>
+<meta name="description" content="NivelIA clasifica fuentes de información en niveles de confianza ascendentes y enseña a estudiantes y docentes a usar la inteligencia artificial de forma ética.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Sora:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#2563EB;
+    --secondary:#7C3AED;
+    --accent:#22D3EE;
+    --text:#1E293B;
+    --bg:#F1F5F9;
+    --white:#FFFFFF;
+    --line: rgba(30,41,59,0.12);
+    --muted: rgba(30,41,59,0.62);
+    --radius: 14px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{ font-family:'Poppins', sans-serif; margin:0; }
+  .subtitle{ font-family:'Sora', sans-serif; }
+
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+  button{ font-family:inherit; cursor:pointer; }
+
+  :focus-visible{
+    outline:2px solid var(--primary);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:1160px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.site{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(241,245,249,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 32px;
+    max-width:1160px;
+    margin:0 auto;
+  }
+  .logo{
+    font-family:'Poppins', sans-serif;
+    font-weight:700;
+    font-size:1.28rem;
+    letter-spacing:-0.01em;
+    display:flex;
+    align-items:baseline;
+    gap:2px;
+  }
+  .logo .ia{ color:var(--primary); }
+  .nav-links{
+    display:flex;
+    gap:32px;
+    list-style:none;
+    margin:0; padding:0;
+    font-size:0.95rem;
+    font-weight:500;
+  }
+  .nav-links a{
+    text-decoration:none;
+    color:var(--muted);
+    transition:color .15s ease;
+  }
+  .nav-links a:hover{ color:var(--text); }
+  .nav-cta{
+    background:var(--text);
+    color:var(--white);
+    border:none;
+    padding:11px 20px;
+    border-radius:999px;
+    font-size:0.92rem;
+    font-weight:600;
+  }
+  .nav-menu-btn{
+    display:none;
+    background:none; border:none;
+    width:40px; height:40px;
+    position:relative;
+  }
+  .nav-menu-btn span, .nav-menu-btn span::before, .nav-menu-btn span::after{
+    content:'';
+    position:absolute; left:9px; right:9px;
+    height:2px; background:var(--text);
+  }
+  .nav-menu-btn span{ top:19px; }
+  .nav-menu-btn span::before{ top:-7px; }
+  .nav-menu-btn span::after{ top:7px; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:76px 0 96px;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:64px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(2.1rem, 3.6vw, 3.15rem);
+    line-height:1.14;
+    letter-spacing:-0.01em;
+    max-width:16ch;
+  }
+  .hero-lead{
+    margin-top:22px;
+    font-size:1.08rem;
+    color:var(--muted);
+    max-width:46ch;
+  }
+  .hero-actions{
+    margin-top:32px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border-radius:999px;
+    padding:14px 26px;
+    font-weight:600;
+    font-size:0.98rem;
+    border:1px solid transparent;
+    text-decoration:none;
+  }
+  .btn-primary{
+    background:var(--primary);
+    color:var(--white);
+  }
+  .btn-primary:hover{ background:#1d4fd1; }
+  .btn-ghost{
+    background:transparent;
+    color:var(--text);
+    border-color:var(--line);
+  }
+  .btn-ghost:hover{ border-color:var(--text); }
+
+  .hero-meta{
+    margin-top:30px;
+    display:flex;
+    gap:28px;
+    font-size:0.86rem;
+    color:var(--muted);
+  }
+  .hero-meta strong{
+    display:block;
+    font-family:'Sora', sans-serif;
+    font-size:1.3rem;
+    color:var(--text);
+  }
+
+  /* Staircase graphic */
+  .stair-card{
+    background:var(--white);
+    border-radius:20px;
+    border:1px solid var(--line);
+    padding:28px 26px 22px;
+    box-shadow:0 24px 48px -28px rgba(37,99,235,0.28);
+  }
+  .stair-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+  }
+  .stair-head span{
+    font-size:0.82rem;
+    color:var(--muted);
+    font-weight:500;
+  }
+  .stair-row{
+    display:flex;
+    align-items:flex-end;
+    gap:10px;
+    height:170px;
+  }
+  .stair-bar{
+    flex:1;
+    border-radius:8px 8px 4px 4px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    padding-top:8px;
+    font-size:0.78rem;
+    font-weight:600;
+    color:var(--white);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .stair-bar:nth-child(1){ height:30%;  background:#B7C1D1; }
+  .stair-bar:nth-child(2){ height:48%;  background:#7DA1F0; }
+  .stair-bar:nth-child(3){ height:66%;  background:var(--primary); }
+  .stair-bar:nth-child(4){ height:84%;  background:var(--secondary); }
+  .stair-bar:nth-child(5){ height:100%; background:var(--accent); color:#0B2A33; }
+  .stair-bar.active{ transform:translateY(-6px); box-shadow:0 10px 20px -8px rgba(15,23,42,0.35); }
+
+  .stair-labels{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+  }
+  .stair-labels span{
+    flex:1;
+    text-align:center;
+    font-size:0.68rem;
+    color:var(--muted);
+    line-height:1.25;
+  }
+
+  .demo-box{
+    margin-top:22px;
+    border-top:1px solid var(--line);
+    padding-top:18px;
+  }
+  .demo-box label{
+    font-size:0.82rem;
+    font-weight:600;
+    display:block;
+    margin-bottom:8px;
+  }
+  .demo-row{
+    display:flex;
+    gap:10px;
+  }
+  .demo-row input{
+    flex:1;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:11px 14px;
+    font-family:inherit;
+    font-size:0.92rem;
+    background:var(--bg);
+    color:var(--text);
+  }
+  .demo-row input:focus{ background:var(--white); }
+  .demo-row button{
+    border:none;
+    background:var(--text);
+    color:var(--white);
+    border-radius:10px;
+    padding:0 20px;
+    font-weight:600;
+    font-size:0.9rem;
+    white-space:nowrap;
+  }
+  .demo-result{
+    margin-top:14px;
+    font-size:0.86rem;
+    color:var(--muted);
+    min-height:20px;
+  }
+  .demo-result strong{ color:var(--text); }
+  .demo-note{
+    margin-top:6px;
+    font-size:0.74rem;
+    color:var(--muted);
+    opacity:0.85;
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding:88px 0; }
+  .section-head{
+    max-width:640px;
+    margin-bottom:52px;
+  }
+  .section-head h2{
+    font-size:clamp(1.6rem, 2.6vw, 2.2rem);
+    letter-spacing:-0.01em;
+  }
+  .section-head p{
+    margin-top:14px;
+    color:var(--muted);
+    font-size:1rem;
+    max-width:56ch;
+  }
+
+  .alt{ background:var(--white); }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:28px;
+  }
+  .step{
+    border-top:2px solid var(--line);
+    padding-top:20px;
+  }
+  .step .num{
+    font-family:'Sora', sans-serif;
+    font-weight:600;
+    font-size:0.95rem;
+    color:var(--primary);
+  }
+  .step h3{
+    font-family:'Sora', sans-serif;
+    font-size:1.12rem;
+    font-weight:600;
+    margin-top:10px;
+  }
+  .step p{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:0.95rem;
+  }
+
+  /* ---------- LEVELS ---------- */
+  .levels{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:16px;
+  }
+  .level-card{
+    background:var(--bg);
+    border-radius:var(--radius);
+    padding:20px 16px 22px;
+    border:1px solid var(--line);
+  }
+  .level-bar{
+    height:6px;
+    border-radius:4px;
+    margin-bottom:16px;
+  }
+  .level-card:nth-child(1) .level-bar{ background:#B7C1D1; width:22%; }
+  .level-card:nth-child(2) .level-bar{ background:#7DA1F0; width:42%; }
+  .level-card:nth-child(3) .level-bar{ background:var(--primary); width:62%; }
+  .level-card:nth-child(4) .level-bar{ background:var(--secondary); width:82%; }
+  .level-card:nth-child(5) .level-bar{ background:var(--accent); width:100%; }
+  .level-card h3{
+    font-family:'Sora', sans-serif;
+    font-size:1rem;
+    font-weight:600;
+  }
+  .level-card p{
+    margin-top:8px;
+    font-size:0.85rem;
+    color:var(--muted);
+  }
+
+  /* ---------- PRINCIPLES ---------- */
+  .principles{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .principle{
+    background:var(--white);
+    padding:30px 26px;
+  }
+  .principle .ico{
+    width:38px; height:38px;
+    border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:16px;
+  }
+  .principle:nth-child(6n+1) .ico{ background:rgba(37,99,235,0.12); }
+  .principle:nth-child(6n+2) .ico{ background:rgba(124,58,237,0.12); }
+  .principle:nth-child(6n+3) .ico{ background:rgba(34,211,238,0.18); }
+  .principle:nth-child(6n+4) .ico{ background:rgba(124,58,237,0.12); }
+  .principle:nth-child(6n+5) .ico{ background:rgba(34,211,238,0.18); }
+  .principle:nth-child(6n+6) .ico{ background:rgba(37,99,235,0.12); }
+  .principle .ico svg{ width:19px; height:19px; }
+  .principle h3{
+    font-family:'Sora', sans-serif;
+    font-size:1.02rem;
+    font-weight:600;
+  }
+  .principle p{
+    margin-top:8px;
+    font-size:0.9rem;
+    color:var(--muted);
+  }
+
+  /* ---------- AUDIENCE TABS ---------- */
+  .audience-shell{
+    background:var(--text);
+    color:var(--white);
+    border-radius:24px;
+    padding:48px;
+    display:grid;
+    grid-template-columns:0.8fr 1.2fr;
+    gap:48px;
+  }
+  .audience-tabs{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .tab-btn{
+    text-align:left;
+    background:transparent;
+    border:none;
+    color:rgba(255,255,255,0.55);
+    font-family:'Sora', sans-serif;
+    font-size:1.3rem;
+    font-weight:600;
+    padding:10px 0;
+    border-bottom:1px solid rgba(255,255,255,0.15);
+  }
+  .tab-btn.is-active{ color:var(--white); }
+  .tab-btn.is-active .tab-underline{
+    display:block;
+  }
+  .tab-panel{ display:none; }
+  .tab-panel.is-active{ display:block; }
+  .tab-panel p{
+    color:rgba(255,255,255,0.75);
+    font-size:1.02rem;
+    max-width:52ch;
+  }
+  .tab-panel ul{
+    margin-top:20px;
+    padding:0;
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .tab-panel li{
+    display:flex;
+    gap:12px;
+    font-size:0.94rem;
+    color:rgba(255,255,255,0.9);
+  }
+  .tab-panel li .dot{
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--accent);
+    margin-top:8px;
+    flex-shrink:0;
+  }
+
+  /* ---------- FINAL CTA ---------- */
+  .cta-band{
+    background:linear-gradient(120deg, var(--primary), var(--secondary));
+    border-radius:24px;
+    padding:64px 56px;
+    color:var(--white);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:32px;
+  }
+  .cta-band h2{
+    font-size:clamp(1.5rem, 2.4vw, 2rem);
+    max-width:16ch;
+  }
+  .cta-band .btn-primary{
+    background:var(--white);
+    color:var(--text);
+  }
+  .cta-band .btn-primary:hover{ background:rgba(255,255,255,0.9); }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:56px 0 40px;
+    border-top:1px solid var(--line);
+  }
+  .footer-grid{
+    display:flex;
+    justify-content:space-between;
+    gap:32px;
+    flex-wrap:wrap;
+  }
+  .footer-brand p{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:0.88rem;
+    max-width:34ch;
+  }
+  .footer-links{
+    display:flex;
+    gap:56px;
+  }
+  .footer-col h4{
+    font-size:0.82rem;
+    font-weight:600;
+    margin-bottom:12px;
+  }
+  .footer-col a{
+    display:block;
+    text-decoration:none;
+    color:var(--muted);
+    font-size:0.88rem;
+    margin-bottom:9px;
+  }
+  .footer-col a:hover{ color:var(--text); }
+  .footer-bottom{
+    margin-top:44px;
+    padding-top:22px;
+    border-top:1px solid var(--line);
+    font-size:0.8rem;
+    color:var(--muted);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 880px){
+    .nav-links{ display:none; }
+    .nav-menu-btn{ display:block; }
+    .hero-grid{ grid-template-columns:1fr; gap:44px; }
+    .steps{ grid-template-columns:1fr; gap:36px; }
+    .levels{ grid-template-columns:repeat(2,1fr); }
+    .principles{ grid-template-columns:1fr; }
+    .audience-shell{ grid-template-columns:1fr; padding:32px; }
+    .audience-tabs{ flex-direction:row; overflow-x:auto; }
+    .cta-band{ flex-direction:column; text-align:center; }
+    .wrap{ padding:0 20px; }
+    .stair-labels span{ font-size:0.6rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .stair-bar, .btn, .nav-links a{ transition:none; }
+  }
+
+  /* ---------- TUTORIAL ---------- */
+  .tour-spot{
+    position:fixed; z-index:9000; pointer-events:none;
+    border-radius:14px;
+    box-shadow:0 0 0 9999px rgba(15,23,42,0.55), 0 0 0 3px var(--accent);
+    opacity:0; visibility:hidden; transition:opacity .25s ease;
+  }
+  .tour-pop{
+    position:fixed; z-index:9001;
+    width:min(344px, calc(100vw - 24px));
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:16px;
+    box-shadow:0 24px 48px -16px rgba(15,23,42,0.45);
+    padding:22px 20px 14px;
+    opacity:0; visibility:hidden; transition:opacity .2s ease;
+    outline:none;
+  }
+  .tour-pop::before{
+    content:''; position:absolute; left:0; right:0; top:0; height:4px;
+    border-radius:16px 16px 0 0;
+    background:linear-gradient(90deg,var(--primary),var(--secondary),var(--accent));
+  }
+  .tour-on .tour-spot, .tour-on .tour-pop{ opacity:1; visibility:visible; }
+  .tour-count{ font-size:0.72rem; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--primary); }
+  .tour-pop h3{ font-family:'Sora', sans-serif; font-size:1.08rem; font-weight:600; margin:6px 0 6px; }
+  .tour-pop p{ margin:0; font-size:0.92rem; color:var(--muted); }
+  .tour-pop p.tour-hint{ margin-top:10px; font-size:0.83rem; font-weight:500; color:var(--primary); }
+  .tour-progress{ height:4px; background:var(--line); border-radius:4px; margin-top:16px; overflow:hidden; }
+  .tour-progress i{ display:block; height:100%; background:var(--primary); border-radius:4px; transition:width .3s ease; }
+  .tour-foot{ display:flex; align-items:center; gap:8px; margin-top:12px; }
+  .tour-skip{
+    margin-right:auto; background:none; border:none; padding:8px 4px;
+    font-size:0.84rem; font-weight:500; color:var(--muted); text-decoration:underline;
+  }
+  .tour-skip:hover{ color:var(--text); }
+  .tour-btn{
+    border-radius:999px; border:1px solid var(--line); background:transparent; color:var(--text);
+    font-weight:600; font-size:0.88rem; padding:9px 16px;
+  }
+  .tour-btn:hover{ border-color:var(--text); }
+  .tour-btn.primary{ background:var(--primary); border-color:var(--primary); color:var(--white); }
+  .tour-btn.primary:hover{ background:#1d4fd1; }
+
+  .tour-resume{
+    position:fixed; right:20px; bottom:20px; z-index:60;
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--text); color:var(--white); border:none; border-radius:999px;
+    padding:12px 18px; font-weight:600; font-size:0.9rem;
+    box-shadow:0 12px 28px -10px rgba(15,23,42,0.5);
+  }
+  .tour-resume:hover{ background:#0f172a; }
+  .tour-resume svg{ width:16px; height:16px; }
+  .tour-on .tour-resume{ display:none; }
+  .tour-toast{
+    position:fixed; right:20px; bottom:76px; z-index:60; max-width:250px;
+    background:var(--white); border:1px solid var(--line); border-radius:12px;
+    padding:10px 14px; font-size:0.84rem; color:var(--text);
+    box-shadow:0 12px 28px -12px rgba(15,23,42,0.35);
+    opacity:0; visibility:hidden; transform:translateY(6px);
+    transition:opacity .25s ease, transform .25s ease, visibility .25s;
+  }
+  .tour-toast.show{ opacity:1; visibility:visible; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    .tour-spot, .tour-pop, .tour-progress i, .tour-toast{ transition:none; }
+  }
+
+  /* ---------- DEMO: carga y resultado ---------- */
+  .demo-row button:disabled{ opacity:.65; cursor:progress; }
+  .demo-row input:read-only{ opacity:.7; }
+  .demo-loading{
+    display:flex; align-items:center; gap:16px;
+    background:var(--bg); border:1px solid var(--line); border-radius:12px;
+    padding:16px 18px;
+    animation:fadeUp .25s ease both;
+  }
+  .spinner{
+    flex:none; width:34px; height:34px; border-radius:50%;
+    background:conic-gradient(from 0deg, rgba(37,99,235,0) 0%, var(--primary) 55%, var(--secondary) 80%, var(--accent) 100%);
+    -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
+            mask:radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
+    animation:spin .9s linear infinite;
+  }
+  .loading-body{ flex:1; min-width:0; }
+  .loading-msg{ font-size:0.92rem; font-weight:600; color:var(--text); animation:msgIn .3s ease both; }
+  .loading-steps{ display:flex; gap:5px; margin-top:10px; }
+  .loading-steps i{ flex:1; height:4px; border-radius:4px; background:var(--line); transition:background .3s ease; }
+  .loading-steps i.on{ background:linear-gradient(90deg, var(--primary), var(--secondary)); }
+  .loading-sub{ margin-top:7px; font-size:0.74rem; color:var(--muted); }
+
+  .result-card{
+    background:var(--white); border:1px solid var(--line);
+    border-left:4px solid var(--lvl, var(--primary));
+    border-radius:12px; padding:14px 16px;
+    animation:fadeUp .35s ease both;
+  }
+  .result-top{ display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+  .result-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Sora', sans-serif; font-weight:600; font-size:0.92rem; color:var(--text);
+    background:color-mix(in srgb, var(--lvl) 14%, white);
+    padding:5px 12px; border-radius:999px;
+  }
+  .result-badge i{ width:9px; height:9px; border-radius:50%; background:var(--lvl); }
+  .result-time{ font-size:0.74rem; color:var(--muted); }
+  .result-meta{ display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
+  .result-chip{
+    font-size:0.74rem; font-weight:500; color:var(--text);
+    background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:2px 10px;
+    max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .result-why{ margin:10px 0 0; font-size:0.86rem; color:var(--muted); }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  @keyframes msgIn{ from{ opacity:0; transform:translateY(4px); } to{ opacity:1; transform:none; } }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce){
+    .spinner{ animation-duration:2.4s; }
+    .demo-loading, .result-card, .loading-msg{ animation:none; }
+  }
+
+  /* ---------- DESGLOSE DE PISTAS Y CITAS ---------- */
+  .clues{ display:grid; gap:10px; }
+  .clue{
+    --c:#2563EB;
+    display:flex; gap:12px; align-items:flex-start;
+    background:color-mix(in srgb, var(--c) 7%, white);
+    border:1px solid color-mix(in srgb, var(--c) 22%, white);
+    border-left:4px solid var(--c);
+    border-radius:12px; padding:12px 14px;
+    animation:fadeUp .35s ease both;
+  }
+  .clue.sev-high{ --c:#DC2626; }
+  .clue.sev-medium{ --c:#D97706; }
+  .clue.sev-ok{ --c:#059669; }
+  .clue.sev-info{ --c:#2563EB; }
+  .clue-ico{
+    flex:none; width:36px; height:36px; border-radius:10px; background:var(--white);
+    display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+    box-shadow:0 1px 0 var(--line);
+  }
+  .clue h4{ margin:0; font-family:'Sora', sans-serif; font-size:0.9rem; font-weight:600; line-height:1.35; }
+  .clue p{ margin:4px 0 0; font-size:0.82rem; color:var(--muted); line-height:1.5; }
+  .clue p.clue-tip{ color:var(--text); font-size:0.78rem; opacity:.85; }
+  .clue p.clue-tip b{ color:var(--c); font-weight:600; }
+
+  .result-clues{ margin-top:16px; padding-top:14px; border-top:1px dashed var(--line); }
+  .result-clues h4{ margin:0 0 10px; font-family:'Sora', sans-serif; font-size:0.86rem; font-weight:600; }
+  .cite-cta{ margin-top:14px; }
+  .cite-open{
+    display:inline-flex; align-items:center; gap:8px; border:none; border-radius:999px;
+    background:linear-gradient(120deg, var(--primary), var(--secondary)); color:var(--white);
+    padding:10px 18px; font-weight:600; font-size:0.86rem;
+  }
+  .cite-open:hover{ filter:brightness(1.07); }
+  .cite-panel{
+    margin-top:12px; background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:14px;
+    animation:fadeUp .25s ease both;
+  }
+  .cite-panel[hidden]{ display:none; }
+  .cite-tabs{ display:inline-flex; background:var(--white); border:1px solid var(--line); border-radius:999px; padding:3px; }
+  .cite-tabs button{ border:none; background:transparent; border-radius:999px; padding:6px 16px; font-weight:600; font-size:0.82rem; color:var(--muted); }
+  .cite-tabs button.on{ background:var(--text); color:var(--white); }
+  .cite-fields{ display:grid; grid-template-columns:1fr 1fr; gap:8px 10px; margin-top:12px; }
+  .cite-fields label{ display:block; font-size:0.72rem; font-weight:600; color:var(--muted); margin:0; }
+  .cite-fields input{
+    width:100%; margin-top:3px; border:1px solid var(--line); border-radius:8px; padding:7px 10px;
+    font-family:inherit; font-size:0.82rem; background:var(--white); color:var(--text);
+  }
+  .cite-fields input.bad{ border-color:#DC2626; }
+  .cite-fields .wide{ grid-column:1 / -1; }
+  .cite-out{
+    margin-top:12px; background:var(--white); border:1px solid var(--line); border-radius:10px;
+    padding:12px 14px; font-size:0.86rem; line-height:1.6; color:var(--text); word-break:break-word;
+  }
+  .cite-foot{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:10px; flex-wrap:wrap; }
+  .cite-hint{ font-size:0.72rem; color:var(--muted); max-width:30ch; }
+  .cite-copy{ border:none; border-radius:999px; background:var(--primary); color:var(--white); padding:8px 16px; font-weight:600; font-size:0.84rem; }
+  .cite-copy:hover{ background:#1d4fd1; }
+
+  /* Sección para estudiantes */
+  .learn{ background:linear-gradient(180deg, #EAF0FF 0%, var(--bg) 100%); }
+  .learn-grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; }
+  .learn-col{ background:var(--white); border:1px solid var(--line); border-radius:20px; padding:32px 28px; }
+  .learn-tag{
+    display:inline-block; font-size:0.72rem; font-weight:600; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--secondary); background:rgba(124,58,237,0.1); padding:4px 12px; border-radius:999px;
+  }
+  .learn-col h3{ font-family:'Sora', sans-serif; font-size:1.25rem; font-weight:600; margin-top:14px; }
+  .learn-col > p{ margin:10px 0 20px; color:var(--muted); font-size:0.95rem; }
+  .cite-mock{ display:grid; gap:12px; }
+  .cite-sample{ background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:14px 16px; font-size:0.86rem; line-height:1.6; word-break:break-word; }
+  .cite-sample b{ display:block; font-family:'Sora', sans-serif; font-size:0.74rem; letter-spacing:.05em; text-transform:uppercase; color:var(--primary); margin-bottom:4px; }
+  .learn-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+  @media (max-width: 880px){
+    .learn-grid{ grid-template-columns:1fr; }
+    .learn-col{ padding:26px 20px; }
+    .cite-fields{ grid-template-columns:1fr; }
+  }
+  @media (prefers-reduced-motion: reduce){ .clue, .cite-panel{ animation:none; } }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="nav">
+    <div class="logo">Nivel<span class="ia">IA</span></div>
+    <ul class="nav-links">
+      <li><a href="#como-funciona">Cómo funciona</a></li>
+      <li><a href="#niveles">Niveles de confianza</a></li>
+        <li><a href="#aprende">Para estudiantes</a></li>
+      <li><a href="#principios">Principios éticos</a></li>
+      <li><a href="#para-quien">Para quién es</a></li>
+    </ul>
+    <button class="nav-cta" id="ctaTop">Entrar</button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" id="demo">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Antes de creerlo, entiende qué tan confiable es.</h1>
+        <p class="hero-lead">NivelIA analiza una fuente o afirmación y la ubica en una escala de confianza ascendente, explicando el porqué. No entrega veredictos: entrega criterio para que estudiantes y docentes decidan con más información.</p>
+        <div class="hero-actions">
+          <a href="#niveles" class="btn btn-primary">Ver los niveles de confianza</a>
+          <a href="#principios" class="btn btn-ghost">Cómo cuidamos el uso ético</a>
+        </div>
+        <div class="hero-meta">
+          <div><strong>5</strong>niveles ascendentes</div>
+          <div><strong>0</strong>datos personales guardados</div>
+          <div><strong>100%</strong>revisión humana disponible</div>
+        </div>
+      </div>
+
+      <div class="stair-card">
+        <div class="stair-head">
+          <span>Ejemplo de clasificación</span>
+          <span id="stairStatus">En espera</span>
+        </div>
+        <div class="stair-row" id="stairRow">
+          <div class="stair-bar"></div>
+          <div class="stair-bar"></div>
+          <div class="stair-bar"></div>
+          <div class="stair-bar"></div>
+          <div class="stair-bar"></div>
+        </div>
+        <div class="stair-labels">
+          <span>Sin verificar</span>
+          <span>Indicios</span>
+          <span>Razonable</span>
+          <span>Alta coincidencia</span>
+          <span>Verificado</span>
+        </div>
+
+        <div class="demo-box">
+          <label for="demoInput">Pega una URL, una afirmación o un titular para ver una demostración</label>
+          <div class="demo-row">
+            <input type="text" id="demoInput" placeholder="Pega una URL o una afirmación. Ej: https://www.bbc.com/mundo">
+            <button id="demoBtn" type="button">Clasificar</button>
+          </div>
+          <div class="demo-result" id="demoResult" aria-live="polite"></div>
+          <div class="demo-note">Demostración ilustrativa del funcionamiento. La clasificación real evalúa evidencia, actualidad y coincidencia entre fuentes.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-funciona" class="alt">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="subtitle">Así funciona la clasificación</h2>
+        <p>Tres pasos, siempre visibles, para que nunca sea una caja negra.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="num">01</div>
+          <h3>Pega una fuente o afirmación</h3>
+          <p>Un enlace, un titular o un fragmento de texto que quieras poner a prueba antes de darlo por cierto.</p>
+        </div>
+        <div class="step">
+          <div class="num">02</div>
+          <h3>La IA evalúa tres criterios</h3>
+          <p>Evidencia disponible, actualidad de la información y coincidencia con otras fuentes independientes.</p>
+        </div>
+        <div class="step">
+          <div class="num">03</div>
+          <h3>Recibes un nivel, no una sentencia</h3>
+          <p>Un nivel de confianza con su explicación, para que la decisión final siga siendo tuya.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="niveles">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="subtitle">Cinco niveles de confianza</h2>
+        <p>La escala es ascendente: entre más alto el nivel, mayor evidencia y coincidencia respaldan la información.</p>
+      </div>
+      <div class="levels">
+        <div class="level-card">
+          <div class="level-bar"></div>
+          <h3>Sin verificar</h3>
+          <p>Sin evidencia identificable o de origen desconocido. Trátala como punto de partida, no como hecho.</p>
+        </div>
+        <div class="level-card">
+          <div class="level-bar"></div>
+          <h3>Indicios iniciales</h3>
+          <p>Una sola fuente la respalda y no hay forma de contrastarla todavía.</p>
+        </div>
+        <div class="level-card">
+          <div class="level-bar"></div>
+          <h3>Razonablemente sólida</h3>
+          <p>Varias fuentes coinciden, aunque persisten vacíos o matices sin resolver.</p>
+        </div>
+        <div class="level-card">
+          <div class="level-bar"></div>
+          <h3>Alta coincidencia</h3>
+          <p>Fuentes independientes y actuales coinciden en lo esencial del dato.</p>
+        </div>
+        <div class="level-card">
+          <div class="level-bar"></div>
+          <h3>Verificado</h3>
+          <p>Evidencia sólida, reciente y consistente entre múltiples fuentes confiables.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="aprende" class="learn">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="subtitle">Para estudiantes: aprende el porqué, no solo la respuesta</h2>
+        <p>NivelIA no se limita a dar un nivel. Te enseña a reconocer las señales por ti mismo y te ahorra tiempo cuando toca citar.</p>
+      </div>
+      <div class="learn-grid">
+        <div class="learn-col">
+          <span class="learn-tag">Desglose de pistas</span>
+          <h3>Entiende por qué una fuente es sospechosa</h3>
+          <p>Cada resultado viene con tarjetas que explican qué señales encontramos y cómo detectarlas tú. Así, la próxima vez no necesitarás ayuda.</p>
+          <div class="clues">
+            <div class="clue sev-high"><div class="clue-ico">⚠️</div><div><h4>Titular amarillista o sensacionalista detectado</h4><p>Usa expresiones como “impactante” y “secreto” que buscan clics más que informar.</p></div></div>
+            <div class="clue sev-high"><div class="clue-ico">🔍</div><div><h4>Dominio sospechoso (.xyz o imitación de un medio reconocido)</h4><p>La terminación es barata y el nombre se parece al de un medio real, pero no lo es.</p></div></div>
+            <div class="clue sev-medium"><div class="clue-ico">❌</div><div><h4>Sin cita directa de expertos ni enlaces a fuentes primarias</h4><p>Nadie firma la afirmación ni hay documentos o datos originales para comprobarla.</p></div></div>
+            <div class="clue sev-medium"><div class="clue-ico">📅</div><div><h4>Noticia fuera de contexto</h4><p>Es un evento de 2018 presentado como si fuera actual.</p></div></div>
+          </div>
+        </div>
+        <div class="learn-col">
+          <span class="learn-tag">Citas automáticas</span>
+          <h3>Cita las fuentes confiables en un clic</h3>
+          <p>Cuando una fuente resulta confiable, aparece el botón “Citar esta fuente”. Se autocompleta desde la URL, puedes editar los datos y copiarla en APA 7 o IEEE.</p>
+          <div class="cite-mock">
+            <div class="cite-sample"><b>APA 7</b>Organización Mundial de la Salud. (s. f.). <em>Diabetes</em>. Recuperado el 24 de octubre de 2026, de https://www.who.int/news-room/fact-sheets/detail/diabetes</div>
+            <div class="cite-sample"><b>IEEE</b>[1] Organización Mundial de la Salud, “Diabetes,” Accessed: Oct. 24, 2026. [Online]. Available: https://www.who.int/news-room/fact-sheets/detail/diabetes</div>
+          </div>
+          <div class="learn-actions">
+            <button type="button" class="btn btn-ghost" data-example="http://bbc-noticias-24.xyz/2018/03/12/impactante-secreto-que-no-quieren-que-sepas">Probar con una fuente sospechosa</button>
+            <button type="button" class="btn btn-primary" data-example="https://www.who.int/news-room/fact-sheets/detail/diabetes">Probar con una fuente confiable</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="principios" class="alt">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="subtitle">Principios que no negociamos</h2>
+        <p>Enseñar a usar la IA de forma ética empieza por cómo se construye la propia herramienta.</p>
+      </div>
+      <div class="principles">
+        <div class="principle">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg></div>
+          <h3>Apoyo, no reemplazo</h3>
+          <p>Acompaña la enseñanza y el aprendizaje; no sustituye al docente ni la decisión del estudiante.</p>
+        </div>
+        <div class="principle">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2"><path d="M4 12h16M4 6h16M4 18h10"/></svg></div>
+          <h3>Cero recolección de datos</h3>
+          <p>No se guarda información personal de quien consulta ni de lo que pregunta.</p>
+        </div>
+        <div class="principle">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#0E7490" stroke-width="2"><path d="M12 2v20M5 8h14M7 8l-3 7a4 4 0 008 0L9 8M17 8l-3 7a4 4 0 008 0l-3-7"/></svg></div>
+          <h3>Respeto a los derechos de autor</h3>
+          <p>Cita el origen de la información y evita presentar contenido ajeno como propio.</p>
+        </div>
+        <div class="principle">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2"><path d="M12 21a9 9 0 100-18 9 9 0 000 18zM12 8v4l3 2"/></svg></div>
+          <h3>Neutralidad ideológica</h3>
+          <p>Evalúa evidencia, no posturas. La escala no premia ni castiga una ideología.</p>
+        </div>
+        <div class="principle">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#0E7490" stroke-width="2"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-4 10.4c.6.6 1 1.4 1 2.6h6c0-1.2.4-2 1-2.6A6 6 0 0012 3z"/></svg></div>
+          <h3>Fortalece el pensamiento crítico</h3>
+          <p>Explica el porqué de cada nivel para que la persona aprenda a evaluar por su cuenta, sin depender de la respuesta.</p>
+        </div>
+        <div class="principle">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+          <h3>Revisión humana siempre disponible</h3>
+          <p>Cualquier persona puede cuestionar un nivel asignado y pedir que un docente lo revise.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="para-quien">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="subtitle">Pensado para el aula, no solo para la pantalla</h2>
+      </div>
+      <div class="audience-shell">
+        <div class="audience-tabs" role="tablist">
+          <button class="tab-btn is-active" data-tab="estudiantes" role="tab" aria-selected="true">Estudiantes</button>
+          <button class="tab-btn" data-tab="docentes" role="tab" aria-selected="false">Docentes</button>
+        </div>
+        <div class="audience-panels">
+          <div class="tab-panel is-active" data-panel="estudiantes">
+            <p>Antes de citar algo en una tarea o de compartirlo, revisa su nivel de confianza y entiende qué lo sostiene: evidencia, coincidencia entre fuentes o ninguna de las dos.</p>
+            <ul>
+              <li><span class="dot"></span>Aprende a distinguir un dato verificado de un rumor, con la razón detrás de cada nivel.</li>
+              <li><span class="dot"></span>Practica con material que explica qué es la IA y cómo usarla sin depender de ella.</li>
+              <li><span class="dot"></span>Pide revisión humana cuando un resultado no te convence.</li>
+            </ul>
+          </div>
+          <div class="tab-panel" data-panel="docentes">
+            <p>Mantente al día sobre un tema fuera de tu dominio y lleva al aula ejemplos reales de cómo se evalúa la confiabilidad de una fuente.</p>
+            <ul>
+              <li><span class="dot"></span>Recibe contexto actualizado sobre temas que no dominas, con su nivel de respaldo.</li>
+              <li><span class="dot"></span>Usa la escala como ejercicio de clase para enseñar verificación de fuentes.</li>
+              <li><span class="dot"></span>Reporta alucinaciones o clasificaciones dudosas desde el mismo panel.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="cta-band">
+        <h2 class="subtitle">Entra con criterio, no con dudas.</h2>
+        <a href="#demo" class="btn btn-primary">Probar la clasificación</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Nivel<span class="ia">IA</span></div>
+      <p>Un asistente que clasifica fuentes en niveles de confianza ascendentes y enseña el uso ético de la inteligencia artificial en el aula.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Plataforma</h4>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#niveles">Niveles de confianza</a>
+        <a href="#principios">Principios éticos</a>
+      </div>
+      <div class="footer-col">
+        <h4>Comunidad</h4>
+        <a href="#para-quien">Para estudiantes</a>
+        <a href="#para-quien">Para docentes</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    Proyecto académico — Cátedra G8, Antioquia 2040, pilar Territorio Educado. NivelIA no reemplaza el criterio humano ni el trabajo docente.
+  </div>
+</footer>
+
+<script src="nivelia-classifier.js"></script>
+<script>
+  // Tabs (Estudiantes / Docentes)
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => { b.classList.remove('is-active'); b.setAttribute('aria-selected','false'); });
+      tabPanels.forEach(p => p.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-selected','true');
+      document.querySelector('.tab-panel[data-panel="' + btn.dataset.tab + '"]').classList.add('is-active');
+    });
+  });
+
+  // Demo: análisis de URLs/textos con latencia de servidor simulada
+  const C = NivelIAClassifier;
+  const demoInput = document.getElementById('demoInput');
+  const demoBtn = document.getElementById('demoBtn');
+  const demoResult = document.getElementById('demoResult');
+  const stairBars = document.querySelectorAll('.stair-bar');
+  const stairStatus = document.getElementById('stairStatus');
+
+  const LEVEL_COLORS = ['#B7C1D1', '#7DA1F0', '#2563EB', '#7C3AED', '#22D3EE'];
+  const CATEGORY_LABEL = { social: 'Red social', press: 'Prensa', official: 'Sitio oficial', unknown: 'Dominio no registrado', text: 'Texto sin enlace' };
+  let busy = false;
+
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+  const wait = (ms) => new Promise((res) => setTimeout(res, ms));
+  const randomDelay = () => 600 + Math.random() * 3400;          // entre 0,6 s y 4 s
+
+  // "Petición al servidor": espera el tiempo simulado y luego analiza
+  async function fakeRequest(text, delay){
+    await wait(delay);
+    return C.assess(text);
+  }
+
+  // Bola de carga con mensajes de consulta rotativos; devuelve una función para detenerla
+  function showLoading(steps, delay){
+    const n = steps.length;
+    demoResult.setAttribute('aria-busy', 'true');
+    demoResult.innerHTML =
+      '<div class="demo-loading" role="status">' +
+        '<div class="spinner" aria-hidden="true"></div>' +
+        '<div class="loading-body">' +
+          '<div class="loading-msg" id="loadingMsg"></div>' +
+          '<div class="loading-steps" aria-hidden="true">' + steps.map(() => '<i></i>').join('') + '</div>' +
+          '<div class="loading-sub" id="loadingSub"></div>' +
+        '</div>' +
+      '</div>';
+    const msg = document.getElementById('loadingMsg');
+    const sub = document.getElementById('loadingSub');
+    const bars = demoResult.querySelectorAll('.loading-steps i');
+    const timers = steps.map((s, i) => setTimeout(() => {
+      msg.style.animation = 'none'; void msg.offsetWidth; msg.style.animation = '';
+      msg.textContent = s.text;
+      sub.textContent = 'Consulta ' + (i + 1) + ' de ' + n + ' · ' + s.source;
+      for(let k = 0; k <= i; k++) bars[k].classList.add('on');
+    }, i * delay / n));
+    return () => { timers.forEach(clearTimeout); demoResult.removeAttribute('aria-busy'); };
+  }
+
+  function clueHTML(c, i){
+    return '<div class="clue sev-' + c.severity + '" style="animation-delay:' + (i * 90) + 'ms">' +
+      '<div class="clue-ico" aria-hidden="true">' + c.icon + '</div>' +
+      '<div><h4>' + esc(c.title) + '</h4><p>' + esc(c.text) + '</p>' +
+      '<p class="clue-tip"><b>Cómo detectarlo:</b> ' + esc(c.tip) + '</p></div></div>';
+  }
+
+  function renderResult(a, delay){
+    stairBars.forEach((bar, i) => bar.classList.toggle('active', i === a.levelIndex));
+    stairStatus.textContent = a.levelName;
+
+    const chips = (a.host ? '<span class="result-chip">' + esc(a.host) + '</span>' : '') +
+                  '<span class="result-chip">' + CATEGORY_LABEL[a.category] + '</span>';
+    const heading = a.levelIndex >= 2 ? 'Por qué esta fuente merece más confianza' : 'Por qué esta fuente genera dudas';
+
+    demoResult.innerHTML =
+      '<div class="result-card" style="--lvl:' + LEVEL_COLORS[a.levelIndex] + '">' +
+        '<div class="result-top"><span class="result-badge"><i></i>Nivel: ' + a.levelName + '</span>' +
+        '<span class="result-time">Respondió en ' + (delay / 1000).toFixed(1).replace('.', ',') + ' s</span></div>' +
+        '<div class="result-meta">' + chips + '</div>' +
+        '<p class="result-why">' + esc(a.reason) + '</p>' +
+        '<div class="result-clues"><h4>' + heading + ' · Desglose de pistas</h4><div class="clues">' + a.clues.map(clueHTML).join('') + '</div></div>' +
+        (a.citable ? '<div class="cite-cta"><button type="button" class="cite-open" aria-expanded="false">📎 Citar esta fuente en APA 7 / IEEE</button></div>' +
+          '<div class="cite-panel" hidden>' +
+            '<div class="cite-tabs" role="tablist"><button type="button" class="on" data-f="apa">APA 7</button><button type="button" data-f="ieee">IEEE</button></div>' +
+            '<div class="cite-fields">' +
+              '<label class="wide">Título<input type="text" data-k="title" placeholder="Título de la página o artículo"></label>' +
+              '<label>Autor u organización<input type="text" data-k="author" placeholder="Opcional"></label>' +
+              '<label>Medio o sitio web<input type="text" data-k="siteName"></label>' +
+              '<label class="wide">Fecha de publicación (AAAA, AAAA-MM o AAAA-MM-DD)<input type="text" data-k="date" placeholder="Ej: 2024-03-15"></label>' +
+            '</div>' +
+            '<div class="cite-out" aria-live="polite"></div>' +
+            '<div class="cite-foot"><span class="cite-hint">Autocompletado desde la URL. Edita lo que conozcas.</span><button type="button" class="cite-copy">Copiar cita</button></div>' +
+          '</div>' : '') +
+      '</div>';
+    if(a.citable) wireCitation(a.citation);
+  }
+
+  function wireCitation(meta){
+    const root = demoResult;
+    const openBtn = root.querySelector('.cite-open'), panel = root.querySelector('.cite-panel');
+    const out = root.querySelector('.cite-out'), copyBtn = root.querySelector('.cite-copy');
+    const tabs = root.querySelectorAll('.cite-tabs button');
+    const inputs = {};
+    root.querySelectorAll('.cite-fields input').forEach((el) => { inputs[el.dataset.k] = el; });
+    inputs.title.value = meta.title; inputs.author.value = meta.author;
+    inputs.siteName.value = meta.siteName; inputs.date.value = C.formatDateInput(meta.date);
+    let fmt = 'apa', last = '';
+
+    function update(){
+      meta.title = inputs.title.value; meta.author = inputs.author.value; meta.siteName = inputs.siteName.value;
+      const raw = inputs.date.value.trim(), d = C.parseDateInput(raw);
+      inputs.date.classList.toggle('bad', !!raw && !d);
+      meta.date = d;
+      const c = C.buildCitation(meta, fmt);
+      out.innerHTML = c.html; last = c.text;
+    }
+    openBtn.addEventListener('click', () => {
+      const show = panel.hidden;
+      panel.hidden = !show;
+      openBtn.setAttribute('aria-expanded', String(show));
+      if(show) update();
+    });
+    tabs.forEach((b) => b.addEventListener('click', () => {
+      fmt = b.dataset.f;
+      tabs.forEach((t) => t.classList.toggle('on', t === b));
+      update();
+    }));
+    Object.keys(inputs).forEach((k) => inputs[k].addEventListener('input', update));
+    copyBtn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(last); }
+      catch(e) {
+        const ta = document.createElement('textarea');
+        ta.value = last; ta.style.cssText = 'position:fixed;opacity:0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch(_) {}
+        ta.remove();
+      }
+      copyBtn.textContent = '¡Copiada!';
+      setTimeout(() => { copyBtn.textContent = 'Copiar cita'; }, 1800);
+    });
+  }
+
+  async function runDemo(){
+    if(busy) return;
+    const text = demoInput.value.trim();
+    if(!text){
+      demoResult.textContent = 'Escribe una afirmación o pega una URL para ver una clasificación de ejemplo.';
+      return;
+    }
+    busy = true;
+    demoBtn.disabled = true; demoBtn.textContent = 'Analizando…'; demoInput.readOnly = true;
+    stairBars.forEach((bar) => bar.classList.remove('active'));
+    stairStatus.textContent = 'Analizando…';
+
+    const delay = randomDelay();
+    const stop = showLoading(C.getLoadingSteps(text, delay), delay);
+    try {
+      const res = await fakeRequest(text, delay);
+      stop();
+      renderResult(res, delay);
+    } catch(e) {
+      stop();
+      stairStatus.textContent = 'En espera';
+      demoResult.textContent = 'No pudimos completar el análisis. Inténtalo de nuevo.';
+    } finally {
+      busy = false;
+      demoBtn.disabled = false; demoBtn.textContent = 'Clasificar'; demoInput.readOnly = false;
+    }
+  }
+
+  demoBtn.addEventListener('click', runDemo);
+  demoInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') runDemo(); });
+
+  // Botones de ejemplo de la sección "Para estudiantes"
+  document.querySelectorAll('[data-example]').forEach((b) => b.addEventListener('click', () => {
+    if(busy) return;
+    demoInput.value = b.dataset.example;
+    document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
+    runDemo();
+  }));
+
+  document.getElementById('ctaTop').addEventListener('click', () => {
+    document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
+    demoInput.focus();
+  });
+</script>
+
+
+<!-- Tutorial de bienvenida -->
+<div class="tour-spot" id="tourSpot" aria-hidden="true"></div>
+<div class="tour-pop" id="tourPop" role="dialog" aria-live="polite" aria-label="Tutorial de NivelIA" tabindex="-1"></div>
+<button class="tour-resume" id="tourResume" type="button">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5l11 7-11 7z"/></svg>
+  <span id="tourResumeLbl">Ver tutorial</span>
+</button>
+<div class="tour-toast" id="tourToast" role="status"></div>
+
+<script>
+// ---------- Tutorial guiado ----------
+(function(){
+  const STEPS = [
+    { title:'¡Bienvenido a NivelIA!', text:'Te mostramos en menos de un minuto cómo sacarle provecho a la página. Puedes salir cuando quieras.' },
+    { sel:'.nav-links', fixed:true, optional:true, title:'Menú de secciones', text:'Desde aquí saltas a cada parte de la página: cómo funciona, niveles, principios y para quién es.' },
+    { sel:'#ctaTop', fixed:true, title:'Botón “Entrar”', text:'Te lleva directo a la demostración y deja el cursor listo para escribir.' },
+    { sel:'.hero-grid > div:first-child', title:'¿Qué es NivelIA?', text:'Analiza una fuente o afirmación y la ubica en una escala de confianza, explicando el porqué. Da criterio, no veredictos.' },
+    { sel:'#stairRow', title:'La escalera de confianza', text:'Cada barra es un nivel, de “Sin verificar” a “Verificado”. La que se levanta es el nivel asignado.' },
+    { sel:'.demo-box', title:'Pruébalo tú mismo', text:'Pega una URL o una afirmación y pulsa “Clasificar”: verás el nivel, las pistas que lo explican y, si la fuente es confiable, un botón para citarla.', hint:'Puedes probarlo ahora; el tutorial no se interrumpe.' },
+    { sel:'#como-funciona .steps', title:'Así funciona', text:'Pegas una fuente, la IA evalúa evidencia, actualidad y coincidencia entre fuentes, y recibes un nivel con su explicación.' },
+    { sel:'#niveles .levels', title:'Los cinco niveles', text:'Van de menor a mayor confianza. Entre más alto el nivel, más evidencia respalda la información.' },
+    { sel:'#aprende .learn-grid', title:'Aprende el porqué', text:'Cada resultado trae un desglose de pistas que explica por qué una fuente genera dudas. Si es confiable, podrás citarla en APA 7 o IEEE con un clic.', hint:'Usa los botones de ejemplo para verlo en acción.' },
+    { sel:'#principios .principles', title:'Principios éticos', text:'Apoyo (no reemplazo) al docente, cero datos personales, respeto al autor, neutralidad y revisión humana siempre disponible.' },
+    { sel:'.audience-shell', title:'Para estudiantes y docentes', text:'Cada rol tiene su propio enfoque de uso.', hint:'Haz clic en “Docentes” para ver el cambio.' },
+    { title:'¡Listo, ya conoces NivelIA!', text:'Si quieres repasarlo, usa el botón “Ver tutorial” de la esquina inferior derecha.' }
+  ];
+  const KEY = 'nivelia_tour_v1';
+  let mem = null;
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || mem; } catch(e){ return mem; } };
+  const save = (s) => { mem = s; try { localStorage.setItem(KEY, JSON.stringify(s)); } catch(e){} };
+
+  const spot = document.getElementById('tourSpot');
+  const pop = document.getElementById('tourPop');
+  const resumeBtn = document.getElementById('tourResume');
+  const resumeLbl = document.getElementById('tourResumeLbl');
+  const toast = document.getElementById('tourToast');
+  const header = document.querySelector('header.site');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let idx = 0, active = false, raf = 0, target = null, sig = '', toastTimer = 0, visibleSteps = [];
+
+  const isVisible = (el) => !!el && el.getClientRects().length > 0;
+  const stepEl = (s) => s.sel ? document.querySelector(s.sel) : null;
+  const usable = (s) => !s.optional || isVisible(stepEl(s));
+
+  function go(i, dir){
+    while(STEPS[i] && !usable(STEPS[i])) i += dir;
+    if(i < 0) i = 0;
+    if(i >= STEPS.length){ end('done'); return; }
+    idx = i;
+    const s = STEPS[i];
+    target = stepEl(s);
+    const n = visibleSteps.indexOf(s) + 1, total = visibleSteps.length;
+    const first = i === 0, last = i === STEPS.length - 1;
+    pop.innerHTML =
+      '<div class="tour-count">Paso ' + n + ' de ' + total + '</div>' +
+      '<h3>' + s.title + '</h3><p>' + s.text + '</p>' +
+      (s.hint ? '<p class="tour-hint">' + s.hint + '</p>' : '') +
+      '<div class="tour-progress"><i style="width:' + (n / total * 100) + '%"></i></div>' +
+      '<div class="tour-foot">' +
+        '<button class="tour-skip" type="button" data-a="skip"' + (last ? ' style="visibility:hidden"' : '') + '>Omitir tutorial</button>' +
+        (first ? '' : '<button class="tour-btn" type="button" data-a="prev">Atrás</button>') +
+        '<button class="tour-btn primary" type="button" data-a="next">' + (first ? 'Comenzar' : last ? 'Finalizar' : 'Siguiente') + '</button>' +
+      '</div>';
+    sig = '';
+    scrollToTarget(s);
+    pop.focus({ preventScroll:true });
+  }
+
+  function scrollToTarget(s){
+    if(!target || s.fixed) return;
+    const r = target.getBoundingClientRect();
+    const vh = innerHeight, hh = header.offsetHeight, ph = pop.offsetHeight;
+    const room = vh - hh - ph - r.height - 40;
+    const want = room > 0 ? hh + 12 + room / 2 : hh + 16;
+    window.scrollTo({ top: scrollY + r.top - want, behavior: reduced ? 'auto' : 'smooth' });
+  }
+
+  function place(){
+    const vw = innerWidth, vh = innerHeight, pw = pop.offsetWidth, ph = pop.offsetHeight;
+    let sl, st, sw, sh, pl, pt;
+    if(!target){
+      sl = vw / 2; st = vh / 2; sw = 0; sh = 0;
+      pl = (vw - pw) / 2; pt = (vh - ph) / 2;
+    } else {
+      const r = target.getBoundingClientRect(), pad = 8, gap = 14;
+      sl = r.left - pad; st = r.top - pad; sw = r.width + pad * 2; sh = r.height + pad * 2;
+      const hb = header.getBoundingClientRect().bottom;
+      const cx = Math.min(Math.max(r.left + r.width / 2 - pw / 2, 16), vw - pw - 16);
+      if(vw < 720){ pl = (vw - pw) / 2; pt = vh - ph - 12; }
+      else if(vh - (r.bottom + pad) - gap >= ph + 12){ pl = cx; pt = r.bottom + pad + gap; }
+      else if(r.top - pad - gap - ph >= hb + 8){ pl = cx; pt = r.top - pad - gap - ph; }
+      else if(vw - r.right - pad - gap >= pw + 16){ pl = r.right + pad + gap; pt = Math.min(Math.max(r.top, hb + 8), vh - ph - 12); }
+      else if(r.left - pad - gap >= pw + 16){ pl = r.left - pad - gap - pw; pt = Math.min(Math.max(r.top, hb + 8), vh - ph - 12); }
+      else { pl = 24; pt = vh - ph - 24; }
+    }
+    const k = [sl, st, sw, sh, pl, pt, ph].map(Math.round).join();
+    if(k === sig) return;
+    sig = k;
+    spot.style.cssText = 'left:' + sl + 'px;top:' + st + 'px;width:' + sw + 'px;height:' + sh + 'px';
+    pop.style.left = pl + 'px'; pop.style.top = pt + 'px';
+  }
+
+  function loop(){ if(!active) return; place(); raf = requestAnimationFrame(loop); }
+
+  function start(from){
+    clearTimeout(toastTimer); toast.classList.remove('show');
+    visibleSteps = STEPS.filter(usable);
+    active = true;
+    document.body.classList.add('tour-on');
+    go(from || 0, 1);
+    cancelAnimationFrame(raf); loop();
+  }
+
+  function end(status){
+    active = false;
+    cancelAnimationFrame(raf);
+    document.body.classList.remove('tour-on');
+    save({ status: status, step: status === 'skipped' ? idx : 0 });
+    refreshBtn();
+    if(status === 'skipped'){
+      toast.textContent = 'Tutorial omitido. Puedes reanudarlo aquí cuando quieras.';
+      toast.classList.add('show');
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 5000);
+    }
+    resumeBtn.focus({ preventScroll:true });
+  }
+
+  function refreshBtn(){
+    const st = load();
+    resumeLbl.textContent = st && st.status === 'skipped' ? 'Reanudar tutorial' : st && st.status === 'done' ? 'Ver tutorial de nuevo' : 'Ver tutorial';
+  }
+
+  pop.addEventListener('click', (e) => {
+    const a = e.target.closest('[data-a]');
+    if(!a) return;
+    if(a.dataset.a === 'next') go(idx + 1, 1);
+    else if(a.dataset.a === 'prev') go(idx - 1, -1);
+    else end('skipped');
+  });
+  resumeBtn.addEventListener('click', () => {
+    const st = load();
+    start(st && st.status === 'skipped' ? st.step : 0);
+  });
+  document.addEventListener('keydown', (e) => {
+    if(!active) return;
+    if(e.key === 'Escape') end('skipped');
+    else if(!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){
+      if(e.key === 'ArrowRight') go(idx + 1, 1);
+      else if(e.key === 'ArrowLeft' && idx > 0) go(idx - 1, -1);
+    }
+  });
+
+  refreshBtn();
+  if(!load()) setTimeout(() => start(0), 700);   // solo en la primera visita
+})();
+</script>
+
+</body>
+</html>
